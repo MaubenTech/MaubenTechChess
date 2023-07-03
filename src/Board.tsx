@@ -16,7 +16,12 @@ const styles = StyleSheet.create({
 const useConst = <T,>(initialValue: T | (() => T)): T => {
     const ref = useRef<{ value: T }>();
     if (ref.current === undefined) {
-
+        //put the value in an object so we can tell if it's initalized even if the initializer
+        //returns or is undefined
+        ref.current = {
+            value:
+                typeof initialValue === "function" ? (initialValue as Function)() : initialValue
+        }
     }
 }
 
